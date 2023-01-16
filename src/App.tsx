@@ -18,9 +18,26 @@ function App() {
 
   return (
     <div className="App">
-      {products.map((data) => (
-        <h1>{data.color}</h1>
-      ))}
+      <table>
+        <thead> 
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Year</th>
+        </tr>
+        </thead>
+        <tbody>
+          
+        {products.map((data, id) => (
+          <tr key={id}>
+            <td>{data.id}</td>
+            <td>{data.name}</td>
+            <td>{data.year}</td>
+          </tr>
+        ))}
+
+</tbody>
+      </table>
     </div>
   );
 }
