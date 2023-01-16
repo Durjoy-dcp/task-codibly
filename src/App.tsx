@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import { DataEntity, Iproducts } from "./model/Iproducts";
 
 function App() {
+  const [data, setData] = React.useState<Iproducts>({} as Iproducts);
+  const [products, setProducts] = React.useState<DataEntity[]>([]);
+
+  useEffect(() => {
+    fetch(`https://reqres.in/api/products`)
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        setProducts(data?.data);
+      });
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {products.map((data) => (
+        <h1>{data.color}</h1>
+      ))}
     </div>
   );
 }
