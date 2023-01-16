@@ -17,26 +17,24 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className="App" style={{ maxWidth: "600px", margin: "auto" }}>
       <table>
-        <thead> 
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Year</th>
-        </tr>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Year</th>
+          </tr>
         </thead>
         <tbody>
-          
-        {products.map((data, id) => (
-          <tr key={id}>
-            <td>{data.id}</td>
-            <td>{data.name}</td>
-            <td>{data.year}</td>
-          </tr>
-        ))}
-
-</tbody>
+          {products.map((data, id) => (
+            <tr key={id}>
+              <td>{data.id}</td>
+              <td>{data.name}</td>
+              <td>{data.year}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );
