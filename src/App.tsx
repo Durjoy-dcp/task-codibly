@@ -4,6 +4,7 @@ import "./App.css";
 import { DataEntity, Iproducts } from "./model/Iproducts";
 
 function App() {
+  const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [products, setProducts] = React.useState<DataEntity[]>([]);
   const [currentProducts, setCurrentProducts] = React.useState<DataEntity[]>(
     []
@@ -14,9 +15,11 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         setProducts(data?.data);
-        setCurrentProducts(data?.data);
+        let sliceto = currentPage * 5;
+        let startfrom = (currentPage - 1) * 5;
+        setCurrentProducts(data?.data.slice(startfrom, sliceto));
       });
-  }, []);
+  }, [currentPage]);
   const showResult = (id: number | string) => {
     if (!id) {
       setCurrentProducts(products);
@@ -25,7 +28,7 @@ function App() {
     const newData = products.filter((data) => data.id === id);
     setCurrentProducts(newData);
   };
-
+  console.log(currentPage);
   return (
     <div className="App" style={{ maxWidth: "600px", margin: "auto" }}>
       <input
@@ -53,6 +56,20 @@ function App() {
           ))}
         </tbody>
       </table>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <button
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={currentPage === 1 ? true : false}
+        >
+          Previous
+        </button>
+        <button
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={currentPage * 5 >= products.length ? true : false}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }
