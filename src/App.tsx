@@ -22,7 +22,9 @@ function App() {
   }, [currentPage]);
   const showResult = (id: number | string) => {
     if (!id) {
-      setCurrentProducts(products);
+      let sliceto = currentPage * 5;
+      let startfrom = (currentPage - 1) * 5;
+      setCurrentProducts(products.slice(startfrom, sliceto));
       return;
     }
     const newData = products.filter((data) => data.id === id);
