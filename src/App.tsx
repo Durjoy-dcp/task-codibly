@@ -6,10 +6,22 @@ import { DataEntity, Iproducts } from "./model/Iproducts";
 function App() {
   const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [products, setProducts] = React.useState<DataEntity[]>([]);
+  const [currentProductInfo, setCurrentProductInfo] =
+    React.useState<DataEntity>();
   const [currentProducts, setCurrentProducts] = React.useState<DataEntity[]>(
     []
   );
+  const [isOpen, setIsOpen] = useState(false);
 
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
+  console.log(currentProductInfo);
   useEffect(() => {
     fetch(`https://reqres.in/api/products`)
       .then((res) => {
@@ -59,7 +71,14 @@ function App() {
         </thead>
         <tbody>
           {currentProducts.map((data, id) => (
-            <tr key={id} style={{ backgroundColor: `${data.color}` }}>
+            <tr
+              onClick={() => {
+                setCurrentProductInfo(data);
+                handleOpen();
+              }}
+              key={id}
+              style={{ backgroundColor: `${data.color}` }}
+            >
               <td>{data.id}</td>
               <td>{data.name}</td>
               <td>{data.year}</td>
@@ -80,6 +99,26 @@ function App() {
         >
           Next
         </button>
+
+        {/* <button onClick={handleOpen}>Open Modal</button> */}
+        {isOpen && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h1 className="modal-title">{currentProductInfo?.name}</h1>
+
+              <h3 className="">Id: {currentProductInfo?.id}</h3>
+              <h3 className="">Color: {currentProductInfo?.color}</h3>
+              <h3 className="">
+                Pantone Value: {currentProductInfo?.pantone_value}
+              </h3>
+              <h3 className="">Year: {currentProductInfo?.year}</h3>
+
+              <button className="modal-close-btn" onClick={handleClose}>
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
