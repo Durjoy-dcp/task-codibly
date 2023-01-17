@@ -55,6 +55,7 @@ function App() {
   return (
     <div className="App" style={{ maxWidth: "600px", margin: "auto" }}>
       <input
+        style={{ margin: "30px", padding: "10px" }}
         type="number"
         onKeyUp={
           //@ts-ignore
