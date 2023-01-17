@@ -12,12 +12,21 @@ function App() {
 
   useEffect(() => {
     fetch(`https://reqres.in/api/products`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText);
+        }
+        return res.json();
+      })
       .then((data) => {
         setProducts(data?.data);
         let sliceto = currentPage * 5;
         let startfrom = (currentPage - 1) * 5;
         setCurrentProducts(data?.data.slice(startfrom, sliceto));
+      })
+      .catch((error) => {
+        console.log(`Error: ${error.message}`);
+        alert("An error occurred. Please try again later.");
       });
   }, [currentPage]);
   const showResult = (id: number | string) => {
